@@ -185,7 +185,9 @@
                      (- (string-length (attendee-email attendee)) 18))"@northeastern.edu"))
 
 (check-expect (is-nu-email? (make-attendee "Alice" "female" "alice@northeastern.edu" "0000000001" false)) true)
+
 (check-expect (is-nu-email? (make-attendee "Bob" "male" "bob@gmail.com" "0000000002" true)) false)
+
 (check-expect (is-nu-email? (make-attendee "Ruoqi" "female" "Ruoqi@northeastern.edu" "002860225" true)) true)
 
 
@@ -245,15 +247,21 @@
 (check-expect (shorten-nuid "1234567890") "7890")
 (check-expect (shorten-nuid "002860225") "0225")
 
+
 (define (new-attendee2 name gender email full-nuid competing)
-  (new-attendee2 name gender email (shorten-nuid full-nuid) competing))
+  (make-attendee2 name gender email (shorten-nuid full-nuid) competing))
 
-(check-expect (new-attendee2 "Alice" "F" "alice@northeastern.edu" "0000000001" true) 
 
-(check-expect (new-attendee2 "Bob" "M" "bob@gmail.com" "000000002" false)             
+(check-expect (new-attendee2 "Alice" "F" "alice@northeastern.edu" "0000000001" true)
+              (make-attendee2 "Alice" "F" "alice@northeastern.edu" "0001" true))
 
-(check-expect (new-attendee2 "Ruoqi" "F" "charlie@northeastern.edu" "002860225" true) 
-  
+(check-expect (new-attendee2 "Bob" "M" "bob@gmail.com" "0000000002" false)
+              (make-attendee2 "Bob" "M" "bob@gmail.com" "0002" false))
+
+(check-expect (new-attendee2 "Ruoqi" "F" "charlie@northeastern.edu" "002860225" true)
+              (make-attendee2 "Ruoqi" "F" "charlie@northeastern.edu" "0225" true))
+
+           
 ;;! Part E
 
 ;; In order to answer this question, please watch this short (5min) video:
@@ -285,19 +293,19 @@
    (text (string-append "NUID: " (attendee2-nuid attendee2)) 15 "red")
    (text (if (attendee2-competing attendee2) "Competing" "Observing") 15 "black")))
 
-(check-expect (print-badge (make-attendee2 "Alice" "F" "alice@northeastern.edu" "0001" true)) 
+(check-expect (print-badge (make-attendee2 "Alice" "F" "alice@northeastern.edu" "0001" true))
               (above 
                (text "Alice" 20 "black")
                (text "NUID: 0001" 15 "red")
                (text "Competing" 15 "black")))
 
-(check-expect (print-badge (make-attendee2 "Bob" "M" "bob@gmail.com" "7890" false)) 
+(check-expect (print-badge (make-attendee2 "Bob" "M" "bob@gmail.com" "2000" false))
               (above 
                (text "Bob" 20 "black")
-               (text "NUID: 0002" 15 "red")
+               (text "NUID: 2000" 15 "red")
                (text "Observing" 15 "black")))
 
-(check-expect (print-badge (make-attendee2 "Charlie" "N" "charlie@northeastern.edu" "2100" true)) 
+(check-expect (print-badge (make-attendee2 "Ruoqi" "F" "Ruoqi@northeastern.edu" "0225" true))
               (above 
                (text "Ruoqi" 20 "black")
                (text "NUID: 0225" 15 "red")
