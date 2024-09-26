@@ -249,14 +249,11 @@
   (new-attendee2 name gender email (shorten-nuid full-nuid) competing))
 
 (check-expect (new-attendee2 "Alice" "F" "alice@northeastern.edu" "0000000001" true) 
-              (new-attendee2 "Alice" "F" "alice@northeastern.edu" "0001" true))
 
-(check-expect (new-attendee2 "Bob" "M" "bob@gmail.com" "000000002" false) 
-              (new-attendee2 "Bob" "M" "bob@gmail.com" "0002" false))
+(check-expect (new-attendee2 "Bob" "M" "bob@gmail.com" "000000002" false)             
 
 (check-expect (new-attendee2 "Ruoqi" "F" "charlie@northeastern.edu" "002860225" true) 
-              (new-attendee2 "Ruoqi" "female" "Ruoqi@northeastern.edu" "0225" true))
-
+  
 ;;! Part E
 
 ;; In order to answer this question, please watch this short (5min) video:
@@ -297,7 +294,7 @@
 (check-expect (print-badge (make-attendee2 "Bob" "M" "bob@gmail.com" "7890" false)) 
               (above 
                (text "Bob" 20 "black")
-               (text "NUID: 7890" 15 "red")
+               (text "NUID: 0002" 15 "red")
                (text "Observing" 15 "black")))
 
 (check-expect (print-badge (make-attendee2 "Charlie" "N" "charlie@northeastern.edu" "2100" true)) 
